@@ -61,12 +61,28 @@ class SocketManager {
     if (this.socket && this.isSocketConnected()) {
       console.log('🔗 Joining monitor room:', monitorId)
       console.log('   Socket ID:', this.socket.id)
-      this.socket.emit('join_monitor', { monitor_id: monitorId })
-      console.log('✅ Emitted join_monitor event')
+
+      // Get authentication token from localStorage
+      const token = localStorage.getItem('token')
+      if (!token) {
+        console.error('❌ No authentication token found for monitor')
+        return
+      }
+
+      this.socket.emit('join_monitor', {
+        monitor_id: monitorId,
+        token: token
+      })
+      console.log('✅ Emitted join_monitor event with authentication')
 
       // Listen for confirmation
       this.socket.once('joined_monitor', (data) => {
         console.log('✅ Successfully joined monitor room:', data)
+      })
+
+      // Listen for authentication errors
+      this.socket.once('error', (error) => {
+        console.error('❌ Error joining monitor room:', error)
       })
     } else {
       console.error('❌ Cannot join monitor room: Socket not connected')

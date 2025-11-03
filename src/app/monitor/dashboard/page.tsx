@@ -19,6 +19,7 @@ import { monitorAPI, chatAPI } from '@/lib/api'
 import { formatDate, getRiskLevelColor, getRiskLevelBg } from '@/lib/utils'
 import CrisisAlerts from '@/components/CrisisAlerts'
 import RealTimeChat from '@/components/RealTimeChat'
+import { socketManager } from '@/lib/socket'
 import type { Conversation, Message } from '@/types'
 
 export default function MonitorDashboard() {
@@ -44,6 +45,80 @@ export default function MonitorDashboard() {
     loadDashboardData()
   }, [router])
 
+  // Escutar novas mensagens via WebSocket para atualizar a lista em tempo real
+  useEffect(() => {
+    if (!username) return
+
+    const socket = socketManager.connect()
+
+    // Monitor recebe todas as mensagens via seu room monitor_{username}
+    console.log(`📡 Monitor ${username} conectado e ouvindo todas as mensagens`)
+
+    // Listener para novas mensagens
+    socketManager.onNewMessage((data) => {
+      console.log('📨 Nova mensagem recebida no dashboard:', data)
+
+      setConversations(prev => {
+        // Verificar se a conversa já existe
+        const conversationExists = prev.some(conv => conv.id === data.conversation_id)
+
+        if (conversationExists) {
+          // Atualizar conversa existente
+          return prev.map(conv => {
+            if (conv.id === data.conversation_id) {
+              const messageExists = conv.messages.some(m => m.id === data.message.id)
+
+              if (!messageExists) {
+                return {
+                  ...conv,
+                  messages: [...conv.messages, data.message]
+                }
+              }
+            }
+            return conv
+          })
+        } else {
+          // Nova conversa detectada! Adicionar à lista
+          console.log('🆕 Nova conversa detectada:', data.conversation_id)
+
+          const newConversation: Conversation = {
+            id: data.conversation_id,
+            title: `Conversa #${data.conversation_id}`,
+            mode: 'user',
+            active: true,
+            status: 'active',
+            messages: [data.message],
+            created_at: data.message.created_at
+          }
+
+          return [newConversation, ...prev]
+        }
+      })
+
+      // Se a mensagem é da conversa selecionada, atualizar também
+      if (selectedConversation && selectedConversation.id === data.conversation_id) {
+        setSelectedConversation(prev => {
+          if (!prev) return prev
+
+          const messageExists = prev.messages.some(m => m.id === data.message.id)
+
+          if (!messageExists) {
+            return {
+              ...prev,
+              messages: [...prev.messages, data.message]
+            }
+          }
+
+          return prev
+        })
+      }
+    })
+
+    return () => {
+      socketManager.offNewMessage()
+    }
+  }, [username, selectedConversation])
+
   const loadDashboardData = async () => {
     try {
       setIsLoading(true)
@@ -54,6 +129,27 @@ export default function MonitorDashboard() {
 
       setConversations(conversationsData)
       setFlaggedMessages(flaggedData)
+
+      // Verificar se há parâmetro conversation na URL (apenas na montagem inicial)
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search)
+        const conversationIdParam = params.get('conversation')
+
+        if (conversationIdParam) {
+          const conversationId = parseInt(conversationIdParam)
+          const conversation = conversationsData.find(c => c.id === conversationId)
+
+          if (conversation) {
+            console.log('🔗 Abrindo conversa automaticamente:', conversationId)
+            setSelectedConversation(conversation)
+
+            // Limpar o parâmetro da URL
+            window.history.replaceState({}, '', '/monitor/dashboard')
+          } else {
+            console.warn('⚠️  Conversa não encontrada:', conversationId)
+          }
+        }
+      }
     } catch (error) {
       console.error('Erro ao carregar dashboard:', error)
       if (error.response?.status === 401) {

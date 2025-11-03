@@ -166,7 +166,8 @@ export default function CrisisAlerts({ monitorId, currentConversationId }: Crisi
     try {
       await monitorAPI.takeControl(conversationId)
 
-      window.open(`/monitor/conversation/${conversationId}`, '_blank')
+      // Navegar para o dashboard com a conversa selecionada
+      window.location.href = `/monitor/dashboard?conversation=${conversationId}`
 
       setAlerts(prev =>
         prev.map(alert =>
