@@ -153,19 +153,8 @@ export default function RealTimeChat({
         }
       })
 
-      socketManager.onCrisisAlert((data) => {
-        if (data.conversation_id === conversationId) {
-          setMessages(prev => [...prev, {
-            id: Date.now(),
-            sender: 'system',
-            text: `⚠️ Alerta de crise: ${data.analysis.risk_level}`,
-            created_at: new Date().toISOString(),
-            flagged: true,
-            risk_level: data.analysis.risk_level,
-            notified: false,
-          } as Message])
-        }
-      })
+      // Crisis alerts são tratados pelo componente CrisisAlerts, não pelo chat
+      // Removido para evitar mensagens de sistema duplicadas no chat
 
       socket.on('user_typing', (data) => {
         if (data.conversation_id === conversationId && data.user !== currentUser) {

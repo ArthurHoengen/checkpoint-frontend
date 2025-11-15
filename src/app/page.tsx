@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Shield, MessageCircle } from 'lucide-react'
 import { chatAPI } from '@/lib/api'
@@ -12,8 +12,13 @@ export default function ChatPage() {
   const [conversation, setConversation] = useState<Conversation | null>(null)
   const [sessionId] = useState(() => generateSessionId())
   const [isLoading, setIsLoading] = useState(false)
+  const isInitialized = useRef(false)
 
   useEffect(() => {
+    // Previne criação duplicada de conversas em React StrictMode
+    if (isInitialized.current) return
+    isInitialized.current = true
+
     initializeChat()
   }, [])
 

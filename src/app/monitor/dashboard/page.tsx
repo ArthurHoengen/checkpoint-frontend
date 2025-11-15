@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -32,6 +32,9 @@ export default function MonitorDashboard() {
   const [username, setUsername] = useState('')
   const router = useRouter()
 
+  // Map para rastrear conversas sendo carregadas e suas promises (evita race condition)
+  const loadingConversations = useRef<Map<number, Promise<any>>>(new Map())
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     const storedUsername = localStorage.getItem('username')
@@ -56,11 +59,24 @@ export default function MonitorDashboard() {
 
     // Listener para novas mensagens
     socketManager.onNewMessage((data) => {
-      console.log('📨 Nova mensagem recebida no dashboard:', data)
+      console.log('📨 Nova mensagem recebida no dashboard:', {
+        conversation_id: data.conversation_id,
+        message_id: data.message.id,
+        message_sender: data.message.sender,
+        message_text: data.message.text.substring(0, 50)
+      })
 
       setConversations(prev => {
+        console.log('🔍 Estado atual:', {
+          total_conversations: prev.length,
+          conversation_ids: prev.map(c => c.id),
+          checking_for: data.conversation_id,
+          loading_conversations: Array.from(loadingConversations.current)
+        })
+
         // Verificar se a conversa já existe
         const conversationExists = prev.some(conv => conv.id === data.conversation_id)
+        console.log('✅ Conversa existe?', conversationExists)
 
         if (conversationExists) {
           // Atualizar conversa existente
@@ -78,20 +94,73 @@ export default function MonitorDashboard() {
             return conv
           })
         } else {
-          // Nova conversa detectada! Adicionar à lista
-          console.log('🆕 Nova conversa detectada:', data.conversation_id)
-
-          const newConversation: Conversation = {
-            id: data.conversation_id,
-            title: `Conversa #${data.conversation_id}`,
-            mode: 'user',
-            active: true,
-            status: 'active',
-            messages: [data.message],
-            created_at: data.message.created_at
+          // Nova conversa detectada! Verificar se já está sendo carregada
+          if (loadingConversations.current.has(data.conversation_id)) {
+            console.log('⏳ Conversa', data.conversation_id, 'já está sendo carregada, ignorando...', {
+              message_id: data.message.id,
+              sender: data.message.sender
+            })
+            return prev
           }
 
-          return [newConversation, ...prev]
+          console.log('🆕 Nova conversa detectada:', data.conversation_id, {
+            message_id: data.message.id,
+            sender: data.message.sender,
+            current_loading: Array.from(loadingConversations.current.keys())
+          })
+
+          // Criar promise para buscar mensagens e marcar como loading
+          const fetchPromise = chatAPI.getMessages(data.conversation_id)
+            .then(messages => {
+              console.log('📥 Mensagens carregadas para conversa', data.conversation_id, ':', {
+                total_messages: messages.length,
+                message_ids: messages.map((m: Message) => m.id)
+              })
+
+              setConversations(prevConversations => {
+                console.log('🔍 Verificando antes de adicionar:', {
+                  conversation_id: data.conversation_id,
+                  current_conversations: prevConversations.map((c: Conversation) => c.id),
+                  already_exists: prevConversations.some((c: Conversation) => c.id === data.conversation_id)
+                })
+
+                // Verificar novamente se já não foi adicionada (evitar duplicatas)
+                if (prevConversations.some((c: Conversation) => c.id === data.conversation_id)) {
+                  console.log('⚠️  Conversa', data.conversation_id, 'já existe na lista - não adicionando duplicata')
+                  return prevConversations
+                }
+
+                const newConversation: Conversation = {
+                  id: data.conversation_id,
+                  title: `Conversa #${data.conversation_id}`,
+                  mode: 'user',
+                  active: true,
+                  status: 'active',
+                  messages: messages,
+                  created_at: messages[0]?.created_at || new Date().toISOString()
+                }
+
+                console.log('✅ Nova conversa adicionada:', data.conversation_id, 'com', messages.length, 'mensagens', {
+                  message_ids: messages.map((m: Message) => m.id),
+                  senders: messages.map((m: Message) => m.sender)
+                })
+                return [newConversation, ...prevConversations]
+              })
+            })
+            .catch((err: any) => {
+              console.error('❌ Erro ao buscar conversa:', err)
+            })
+            .finally(() => {
+              // Remover do Map após carregar (sucesso ou erro)
+              loadingConversations.current.delete(data.conversation_id)
+            })
+
+          // Armazenar a promise no Map
+          loadingConversations.current.set(data.conversation_id, fetchPromise)
+          console.log('🔒 Conversa marcada como carregando:', data.conversation_id, 'Map:', Array.from(loadingConversations.current.keys()))
+
+          // Retornar o estado atual sem modificações por enquanto
+          return prev
         }
       })
 
@@ -117,7 +186,7 @@ export default function MonitorDashboard() {
     return () => {
       socketManager.offNewMessage()
     }
-  }, [username, selectedConversation])
+  }, [username])
 
   const loadDashboardData = async () => {
     try {
@@ -137,7 +206,7 @@ export default function MonitorDashboard() {
 
         if (conversationIdParam) {
           const conversationId = parseInt(conversationIdParam)
-          const conversation = conversationsData.find(c => c.id === conversationId)
+          const conversation = conversationsData.find((c: any) => c.id === conversationId)
 
           if (conversation) {
             console.log('🔗 Abrindo conversa automaticamente:', conversationId)
@@ -150,7 +219,7 @@ export default function MonitorDashboard() {
           }
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao carregar dashboard:', error)
       if (error.response?.status === 401) {
         localStorage.removeItem('token')
@@ -166,13 +235,13 @@ export default function MonitorDashboard() {
     try {
       await monitorAPI.takeControl(conversationId)
 
-      const conversation = conversations.find(c => c.id === conversationId)
+      const conversation = conversations.find((c: Conversation) => c.id === conversationId)
       if (conversation) {
         setSelectedConversation(conversation)
       }
 
       await loadDashboardData()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao assumir controle:', error)
     }
   }
@@ -181,7 +250,7 @@ export default function MonitorDashboard() {
     try {
       await monitorAPI.escalateConversation(conversationId, reason)
       await loadDashboardData()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao escalar conversa:', error)
     }
   }
@@ -387,7 +456,7 @@ export default function MonitorDashboard() {
                   </div>
                 </div>
 
-                <div className="flex-1">
+                <div className="flex-1 overflow-hidden">
                   <RealTimeChat
                     conversationId={selectedConversation.id}
                     currentUser="monitor"
