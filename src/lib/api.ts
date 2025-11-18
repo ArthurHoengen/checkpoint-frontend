@@ -46,13 +46,6 @@ export const chatAPI = {
     })
     return response.data
   },
-
-  setMode: async (conversationId: number, mode: string) => {
-    const response = await api.post(`/chat/conversations/${conversationId}/mode`, {}, {
-      params: { mode }
-    })
-    return response.data
-  },
 }
 
 // Monitor API

@@ -16,7 +16,7 @@ import {
   Filter
 } from 'lucide-react'
 import { monitorAPI, chatAPI } from '@/lib/api'
-import { formatDate, getRiskLevelColor, getRiskLevelBg } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import CrisisAlerts from '@/components/CrisisAlerts'
 import RealTimeChat from '@/components/RealTimeChat'
 import { socketManager } from '@/lib/socket'

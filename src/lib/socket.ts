@@ -49,14 +49,6 @@ class SocketManager {
     return this.socket
   }
 
-  disconnect() {
-    if (this.socket) {
-      this.socket.disconnect()
-      this.socket = null
-      this.isConnected = false
-    }
-  }
-
   joinMonitorRoom(monitorId: string) {
     if (this.socket && this.isSocketConnected()) {
       console.log('🔗 Joining monitor room:', monitorId)
@@ -144,13 +136,6 @@ class SocketManager {
     if (this.socket) {
       this.socket.off('crisis_alert') // Remove old listeners
       this.socket.on('crisis_alert', callback)
-    }
-  }
-
-  onConversationEscalated(callback: (data: any) => void) {
-    if (this.socket) {
-      this.socket.off('conversation_escalated') // Remove old listeners
-      this.socket.on('conversation_escalated', callback)
     }
   }
 
