@@ -295,9 +295,9 @@ export default function RealTimeChat({
                 <span className="text-xs font-medium opacity-70">
                   {message.sender === 'monitor' ? 'Monitor' :
                    message.sender === 'system' ? 'Sistema' :
-                   message.sender === 'user' ? 'Você' : 'IA'}
+                   message.sender === 'user' ? (currentUser === 'monitor' ? 'Usuário' : 'Você') : 'IA'}
                 </span>
-                {message.flagged && (
+                {message.flagged && currentUser === 'monitor' && (
                   <AlertTriangle className="h-3 w-3 text-red-500" />
                 )}
               </div>
