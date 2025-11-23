@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster A0 - Checkpoint</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: 841mm 1189mm;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .poster {
+            width: 841mm;
+            height: 1189mm;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 30mm;
+            display: flex;
+            flex-direction: column;
+            gap: 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15mm;
+            border-bottom: 3px solid #7D1128;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15mm;
+        }
+
+        .logo {
+            width: 60mm;
+            height: 60mm;
+            background: #7D1128;
+            border-radius: 8mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(125, 17, 40, 0.3);
+        }
+
+        .logo svg {
+            width: 40mm;
+            height: 40mm;
+            fill: white;
+        }
+
+        .institution {
+            font-size: 28pt;
+            color: #7D1128;
+            font-weight: bold;
+        }
+
+        .author-info {
+            text-align: right;
+        }
+
+        .author-name {
+            font-size: 32pt;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3mm;
+        }
+
+        .author-email {
+            font-size: 24pt;
+            color: #666;
+        }
+
+        /* Title Section */
+        .title-section {
+            text-align: center;
+            padding: 15mm 0;
+        }
+
+        .project-title {
+            font-size: 90pt;
+            font-weight: bold;
+            color: #7D1128;
+            letter-spacing: 8px;
+            margin-bottom: 8mm;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .project-subtitle {
+            font-size: 36pt;
+            color: #555;
+            font-weight: 400;
+        }
+
+        .tagline {
+            font-size: 28pt;
+            color: #7D1128;
+            font-style: italic;
+            margin-top: 8mm;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20mm;
+            flex: 1;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8mm;
+            padding: 15mm;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 6px solid #7D1128;
+        }
+
+        .section-title {
+            font-size: 36pt;
+            font-weight: bold;
+            color: #7D1128;
+            margin-bottom: 10mm;
+            padding-bottom: 5mm;
+            border-bottom: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 5mm;
+        }
+
+        .section-icon {
+            width: 15mm;
+            height: 15mm;
+            background: #7D1128;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-icon svg {
+            width: 9mm;
+            height: 9mm;
+            fill: white;
+        }
+
+        .section-content {
+            font-size: 24pt;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .section-content p {
+            margin-bottom: 8mm;
+        }
+
+        /* Features List */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8mm;
+            margin-top: 8mm;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 4mm;
+            font-size: 22pt;
+            padding: 5mm;
+            background: #f8f9fa;
+            border-radius: 4mm;
+        }
+
+        .feature-bullet {
+            color: #7D1128;
+            font-weight: bold;
+            font-size: 26pt;
+        }
+
+        /* Risk Levels */
+        .risk-levels {
+            display: flex;
+            flex-direction: column;
+            gap: 5mm;
+            margin-top: 8mm;
+        }
+
+        .risk-item {
+            display: flex;
+            align-items: center;
+            gap: 5mm;
+            padding: 5mm 8mm;
+            border-radius: 4mm;
+            font-size: 22pt;
+            font-weight: 500;
+        }
+
+        .risk-low { background: #fef9c3; color: #854d0e; }
+        .risk-medium { background: #fed7aa; color: #9a3412; }
+        .risk-high { background: #fecaca; color: #dc2626; }
+        .risk-critical { background: #dc2626; color: white; }
+
+        .risk-dot {
+            width: 8mm;
+            height: 8mm;
+            border-radius: 50%;
+        }
+
+        .risk-low .risk-dot { background: #eab308; }
+        .risk-medium .risk-dot { background: #f97316; }
+        .risk-high .risk-dot { background: #ef4444; }
+        .risk-critical .risk-dot { background: white; }
+
+        /* Architecture Section - Full Width */
+        .architecture-section {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 8mm;
+            padding: 15mm;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 6px solid #7D1128;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10mm;
+            margin-top: 10mm;
+            flex-wrap: wrap;
+        }
+
+        .arch-box {
+            padding: 12mm 18mm;
+            border-radius: 6mm;
+            font-size: 24pt;
+            font-weight: bold;
+            text-align: center;
+            min-width: 80mm;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .arch-user {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .arch-frontend {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+        }
+
+        .arch-backend {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .arch-ai {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .arch-monitor {
+            background: linear-gradient(135deg, #7D1128, #5c0d1e);
+            color: white;
+        }
+
+        .arch-arrow {
+            font-size: 40pt;
+            color: #7D1128;
+        }
+
+        .arch-label {
+            font-size: 18pt;
+            color: #666;
+            margin-top: 3mm;
+            font-weight: normal;
+        }
+
+        /* Tech Stack */
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5mm;
+            margin-top: 8mm;
+        }
+
+        .tech-badge {
+            padding: 4mm 8mm;
+            background: #7D1128;
+            color: white;
+            border-radius: 4mm;
+            font-size: 20pt;
+            font-weight: 500;
+        }
+
+        .tech-badge.secondary {
+            background: #e8e8e8;
+            color: #333;
+        }
+
+        /* QR Codes Section */
+        .qr-section {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            gap: 30mm;
+            padding: 15mm;
+            background: white;
+            border-radius: 8mm;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .qr-item {
+            text-align: center;
+        }
+
+        .qr-code {
+            width: 70mm;
+            height: 70mm;
+            background: white;
+            border: 3px solid #7D1128;
+            border-radius: 4mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5mm;
+            padding: 5mm;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qr-label {
+            font-size: 22pt;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .qr-url {
+            font-size: 16pt;
+            color: #666;
+            word-break: break-all;
+            max-width: 80mm;
+        }
+
+        /* References */
+        .references-section {
+            grid-column: 1 / -1;
+            background: #f8f9fa;
+            border-radius: 8mm;
+            padding: 12mm 15mm;
+            border-left: 6px solid #7D1128;
+        }
+
+        .references-title {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #7D1128;
+            margin-bottom: 8mm;
+        }
+
+        .references-list {
+            font-size: 18pt;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .references-list li {
+            margin-bottom: 3mm;
+            margin-left: 10mm;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 10mm;
+            border-top: 2px solid #e0e0e0;
+            font-size: 20pt;
+            color: #666;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            .poster {
+                box-shadow: none;
+            }
+        }
+
+        /* Decorative Elements */
+        .poster::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300mm;
+            height: 300mm;
+            background: radial-gradient(circle, rgba(125, 17, 40, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Book/Education Icon -->
+                        <path d="M50 15 L15 30 L15 75 L50 60 L85 75 L85 30 Z M50 60 L50 95 M15 30 L50 45 L85 30"
+                              stroke="white" stroke-width="4" fill="none" stroke-linejoin="round"/>
+                        <path d="M50 45 L50 60" stroke="white" stroke-width="4"/>
+                    </svg>
+                </div>
+                <div class="institution">
+                    CATÓLICA SC<br>
+                    <span style="font-size: 20pt; font-weight: normal;">Portfolio de Projetos</span>
+                </div>
+            </div>
+            <div class="author-info">
+                <div class="author-name">Arthur Hoengen</div>
+                <div class="author-email">arthur.hoengen@catolicasc.edu.br</div>
+            </div>
+        </header>
+
+        <!-- Title -->
+        <section class="title-section">
+            <h1 class="project-title">CHECKPOINT</h1>
+            <p class="project-subtitle">Sistema de Apoio Emocional com Detecção de Crises em Tempo Real</p>
+            <p class="tagline">"Estamos aqui para ajudar você"</p>
+        </section>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Contexto / Problema -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </span>
+                    Contexto / Problema
+                </h2>
+                <div class="section-content">
+                    <p>O acesso a suporte emocional imediato é um desafio crescente na sociedade atual. <strong>Milhões de pessoas</strong> em situação de vulnerabilidade emocional não têm acesso rápido a profissionais qualificados.</p>
+                    <p>Momentos de crise exigem <strong>intervenção imediata</strong>, porém os serviços tradicionais de apoio psicológico possuem limitações de horário e disponibilidade.</p>
+                    <p>A identificação precoce de sinais de risco pode ser <strong>determinante para salvar vidas</strong>.</p>
+                </div>
+            </section>
+
+            <!-- Solução Proposta -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+                    </span>
+                    Solução Proposta
+                </h2>
+                <div class="section-content">
+                    <p><strong>Checkpoint</strong> é um chatbot inteligente que combina <strong>Inteligência Artificial</strong> com <strong>monitoramento humano em tempo real</strong>.</p>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Chat em tempo real 24/7</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Detecção automática de crises</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Anonimato garantido</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Intervenção humana quando necessário</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Dashboard para monitores</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-bullet">●</span>
+                            <span>Alertas por nível de risco</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sistema de Detecção -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/></svg>
+                    </span>
+                    Sistema de Detecção de Crises
+                </h2>
+                <div class="section-content">
+                    <p>Análise em tempo real das mensagens para identificar sinais de risco emocional:</p>
+                    <div class="risk-levels">
+                        <div class="risk-item risk-low">
+                            <span class="risk-dot"></span>
+                            <strong>BAIXO</strong> — Monitoramento passivo contínuo
+                        </div>
+                        <div class="risk-item risk-medium">
+                            <span class="risk-dot"></span>
+                            <strong>MÉDIO</strong> — Atenção redobrada do sistema
+                        </div>
+                        <div class="risk-item risk-high">
+                            <span class="risk-dot"></span>
+                            <strong>ALTO</strong> — Alerta sonoro + notificação ao monitor
+                        </div>
+                        <div class="risk-item risk-critical">
+                            <span class="risk-dot"></span>
+                            <strong>CRÍTICO</strong> — Intervenção imediata do monitor
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tecnologias -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                    </span>
+                    Stack Tecnológico
+                </h2>
+                <div class="section-content">
+                    <p><strong>Frontend:</strong></p>
+                    <div class="tech-grid">
+                        <span class="tech-badge">Next.js 14</span>
+                        <span class="tech-badge">React 18</span>
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">Tailwind CSS</span>
+                        <span class="tech-badge">Socket.IO</span>
+                    </div>
+                    <p style="margin-top: 8mm;"><strong>Backend:</strong></p>
+                    <div class="tech-grid">
+                        <span class="tech-badge secondary">Python</span>
+                        <span class="tech-badge secondary">FastAPI</span>
+                        <span class="tech-badge secondary">WebSocket</span>
+                        <span class="tech-badge secondary">JWT Auth</span>
+                        <span class="tech-badge secondary">IA/NLP</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Arquitetura - Full Width -->
+            <section class="architecture-section">
+                <h2 class="section-title">
+                    <span class="section-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10 0h8v8h-8v-8zm4-10c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4z"/></svg>
+                    </span>
+                    Arquitetura do Sistema
+                </h2>
+                <div class="architecture-diagram">
+                    <div class="arch-box arch-user">
+                        👤 Usuário
+                        <div class="arch-label">Interface de Chat</div>
+                    </div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box arch-frontend">
+                        💻 Frontend
+                        <div class="arch-label">Next.js + React</div>
+                    </div>
+                    <span class="arch-arrow">⇄</span>
+                    <div class="arch-box arch-backend">
+                        ⚙️ Backend
+                        <div class="arch-label">FastAPI + WebSocket</div>
+                    </div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box arch-ai">
+                        🤖 IA
+                        <div class="arch-label">Análise de Risco</div>
+                    </div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box arch-monitor">
+                        🛡️ Monitor
+                        <div class="arch-label">Dashboard em Tempo Real</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QR Codes -->
+            <section class="qr-section">
+                <div class="qr-item">
+                    <div class="qr-code">
+                        <!-- QR Code Frontend - Generated via API -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://github.com/ArthurHoengen/checkpoint-frontend" alt="QR Code Frontend">
+                    </div>
+                    <div class="qr-label">📱 Repositório Frontend</div>
+                    <div class="qr-url">github.com/ArthurHoengen/<br>checkpoint-frontend</div>
+                </div>
+                <div class="qr-item">
+                    <div class="qr-code">
+                        <!-- QR Code Backend - Generated via API -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://github.com/ArthurHoengen/checkpoint-backend" alt="QR Code Backend">
+                    </div>
+                    <div class="qr-label">⚙️ Repositório Backend</div>
+                    <div class="qr-url">github.com/ArthurHoengen/<br>checkpoint-backend</div>
+                </div>
+                <div class="qr-item">
+                    <div class="qr-code" style="border-style: dashed; background: #f8f9fa;">
+                        <span style="font-size: 16pt; color: #999;">Deploy em breve</span>
+                    </div>
+                    <div class="qr-label">🌐 Aplicação (Deploy)</div>
+                    <div class="qr-url">URL em produção<br>a definir</div>
+                </div>
+            </section>
+
+            <!-- Referências -->
+            <section class="references-section">
+                <h3 class="references-title">📚 Referências</h3>
+                <ul class="references-list">
+                    <li><strong>Next.js Documentation</strong> - nextjs.org/docs</li>
+                    <li><strong>Socket.IO</strong> - Real-time bidirectional event-based communication - socket.io</li>
+                    <li><strong>FastAPI</strong> - Modern, fast web framework for building APIs - fastapi.tiangolo.com</li>
+                    <li><strong>Tailwind CSS</strong> - Utility-first CSS framework - tailwindcss.com</li>
+                    <li><strong>CVV (Centro de Valorização da Vida)</strong> - Referência em apoio emocional no Brasil - cvv.org.br</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p><strong>Católica de Santa Catarina</strong> | Portfolio de Projetos 2024 | Desenvolvido com ❤️ por Arthur Hoengen</p>
+        </footer>
+    </div>
+</body>
+</html>
