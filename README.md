@@ -434,7 +434,7 @@ Desenvolvedor Full Stack | Engenharia de Software
 Católica de Santa Catarina - Jaraguá do Sul
 
 [![GitHub](https://img.shields.io/badge/GitHub-Seguir-black)](https://github.com/ArthurHoengen)
-[![Email](https://img.shields.io/badge/Email-Contato-red)](mailto:arhurhoengen@gmail.com)
+[![Email](https://img.shields.io/badge/Email-Contato-red)](mailto:arthurhoengen@gmail.com)
 
 ---
 
