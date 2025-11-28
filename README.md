@@ -6,7 +6,6 @@
 ![Next.js](https://img.shields.io/badge/Next.js-14.2-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
@@ -440,7 +439,9 @@ Católica de Santa Catarina - Jaraguá do Sul
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido como Trabalho de Conclusão de Curso e está disponível sob a licença MIT.
+Este projeto foi desenvolvido como **Trabalho de Conclusão de Curso** em Engenharia de Software na Católica de Santa Catarina. Todos os direitos reservados ao autor.
+
+Para uso ou reprodução deste projeto, entre em contato com o autor.
 
 ---
 
