@@ -433,9 +433,8 @@ docker run -p 3000:3000 \
 Desenvolvedor Full Stack | Engenharia de Software
 Católica de Santa Catarina - Jaraguá do Sul
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Conectar-blue)](https://linkedin.com/in/seu-perfil)
 [![GitHub](https://img.shields.io/badge/GitHub-Seguir-black)](https://github.com/ArthurHoengen)
-[![Email](https://img.shields.io/badge/Email-Contato-red)](mailto:seu-email@exemplo.com)
+[![Email](https://img.shields.io/badge/Email-Contato-red)](mailto:arhurhoengen@gmail.com)
 
 ---
 
