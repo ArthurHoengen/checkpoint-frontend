@@ -1,303 +1,401 @@
-# Checkpoint Frontend
+# Checkpoint - Sistema de Apoio Emocional Digital
 
-Frontend da aplicação Checkpoint - Sistema de chatbot com detecção de crise e suporte humano em tempo real.
+> **Chatbot com IA e Suporte Humano para Pessoas em Vulnerabilidade**
 
-## Funcionalidades
+![Status](https://img.shields.io/badge/Status-Concluído-success)
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+## 📋 Índice
+
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Contexto e Justificativa](#-contexto-e-justificativa)
+- [Funcionalidades](#-funcionalidades)
+- [Arquitetura](#-arquitetura)
+- [Tecnologias](#-tecnologias)
+- [Instalação e Execução](#-instalação-e-execução)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Requisitos](#-requisitos)
+- [Autor](#-autor)
+
+---
+
+## 🎯 Sobre o Projeto
+
+**Checkpoint** é uma plataforma digital de escuta ativa e acolhimento emocional, desenvolvida como Trabalho de Conclusão de Curso em Engenharia de Software na Católica de Santa Catarina. O sistema oferece apoio imediato, anônimo e empático para pessoas em situação de vulnerabilidade emocional.
+
+### 💡 Conceito
+
+Inspirado na ideia de um **"salva-vidas digital"**, o Checkpoint funciona como um ponto de parada seguro — assim como nos jogos ou na vida, onde é possível respirar, refletir e receber ajuda para continuar. O nome simboliza exatamente isso: um momento de acolhimento na jornada emocional de alguém.
+
+### 🎯 Diferenciais
+
+- **Empatia**: IA treinada com diretrizes psicológicas para interações humanizadas
+- **Anonimato Total**: Sem coleta de dados pessoais ou autenticação
+- **Detecção de Risco**: Sistema automático identifica sinais de crise
+- **Escalação Inteligente**: Transferência automática para monitor humano em situações críticas
+- **Interface Acolhedora**: Design focado em transmitir calma e segurança
+
+---
+
+## 🌍 Contexto e Justificativa
+
+### Contexto
+
+O projeto surge em um cenário onde cresce a busca por canais de apoio acessíveis, seguros e humanizados, especialmente diante do aumento dos casos de sofrimento psíquico. A demanda por experiências de suporte emocional imediatas, anônimas e confiáveis reforça a importância de soluções que combinem tecnologia e sensibilidade.
+
+### Justificativa Técnica
+
+A relevância para a Engenharia de Software está na **aplicação ética e inovadora** de tecnologias de IA para enfrentar desafios críticos na saúde mental e no acolhimento digital. O projeto explora:
+
+- Uso responsável de IA conversacional
+- Detecção de risco em tempo real
+- Integração fluida entre automação e intervenção humana
+- Arquitetura escalável com Clean Architecture e Modelo C4
+
+---
+
+## ✨ Funcionalidades
 
 ### Para Usuários
-- **Chat com IA em Tempo Real**: Interface amigável com comunicação via WebSocket
-- **Detecção Automática de Crise**: Sistema que monitora sinais de risco em tempo real
-- **Escalação Automática**: Conversas são automaticamente escaladas para monitores quando detectado risco
-- **Indicadores de Status**: Mostra quando monitor entra na conversa e status de conexão
-- **Interface Responsiva**: Design mobile-first que funciona em todos os dispositivos
-- **Indicador de Digitação**: Feedback visual quando IA ou monitor está digitando
-- **Heartbeat Automático**: Mantém sessões ativas com ping periódico ao backend
+
+- 💬 **Chat em Tempo Real**: Conversa via WebSocket com resposta imediata
+- 🤖 **IA Empática**: Respostas baseadas em diretrizes psicológicas
+- 🚨 **Detecção Automática de Crise**: Monitoramento contínuo de sinais de risco
+- 🔄 **Escalação Automática**: Transferência para monitor humano quando necessário
+- 🔒 **Anonimato Garantido**: Nenhum dado pessoal coletado
+- 📱 **Interface Responsiva**: Design mobile-first para todos dispositivos
+- ⌨️ **Feedback Visual**: Indicadores de digitação e status de conexão
+- 💓 **Sessão Ativa**: Sistema de heartbeat mantém conversa estável
 
 ### Para Monitores
-- **Autenticação JWT**: Sistema seguro de login com tokens
-- **Dashboard em Tempo Real**: Visão geral de todas as conversas com atualizações automáticas via WebSocket
-- **Sistema de Alertas de Crise**: Widget flutuante com notificações sonoras e visuais baseadas em níveis de risco
-- **Chat Bidirecional**: Comunicação direta com usuários em tempo real
-- **Assumir Controle**: Capacidade de assumir controle de conversas e desativar respostas da IA
-- **Filtros e Busca**: Filtrar conversas por status (todas, escaladas, flagadas) e busca em tempo real
-- **Notificações Desktop**: Suporte a notificações do navegador para alertas críticos
-- **Detecção de Novas Conversas**: Automaticamente detecta e exibe novas conversas iniciadas
 
-## Tecnologias Utilizadas
+- 🔐 **Autenticação Segura**: Sistema JWT para acesso administrativo
+- 📊 **Dashboard em Tempo Real**: Visão completa de todas conversas ativas
+- 🔔 **Sistema de Alertas**: Notificações sonoras e visuais baseadas em níveis de risco
+  - 🟡 **Low**: Notificação visual amarela
+  - 🟠 **Medium**: Notificação visual laranja
+  - 🔴 **High**: Notificação vermelha + som
+  - 🚨 **Critical**: Notificação pulsante + som + auto-expansão
+- 💬 **Chat Bidirecional**: Comunicação direta com usuários
+- 🎛️ **Controle Total**: Capacidade de assumir conversa e desativar IA
+- 🔍 **Filtros Avançados**: Busca e filtros por status (ativas, escaladas, flagadas)
+- 🖥️ **Notificações Desktop**: Alertas do navegador para situações críticas
+- 🆕 **Detecção Automática**: Novas conversas aparecem automaticamente
 
-- **Next.js 14.2** - Framework React com App Router
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS** - Estilização utilitária
-- **Socket.IO Client 4.8** - Comunicação em tempo real bidirecional
-- **Axios 1.7** - Cliente HTTP para API REST
-- **Lucide React** - Biblioteca de ícones moderna
-- **Date-fns 4.1** - Manipulação e formatação de datas
-- **clsx & tailwind-merge** - Utilitários para classes CSS condicionais
+---
 
-## Estrutura do Projeto
+## 🏗️ Arquitetura
+
+### Clean Architecture
+
+O projeto segue os princípios da **Clean Architecture**, garantindo:
+
+- ✅ Separação clara de responsabilidades
+- ✅ Independência entre camadas
+- ✅ Fácil manutenção e testabilidade
+- ✅ Baixo acoplamento, alta coesão
+
+**Camadas:**
+
+1. **Entidades** (Entities): Regras de negócio centrais
+2. **Casos de Uso** (Use Cases): Lógica de aplicação
+3. **Interfaces** (Interface Adapters): Comunicação com camadas externas
+4. **Infraestrutura** (Frameworks e Drivers): Detalhes técnicos
+
+### Modelo C4
+
+O sistema é documentado usando o **Modelo C4** para visualização arquitetural:
+
+#### Nível 1 - Contexto
 
 ```
-frontend/
-├── src/
-│   ├── app/                          # App Router do Next.js
-│   │   ├── page.tsx                 # Chat principal do usuário
-│   │   ├── layout.tsx               # Layout global da aplicação
-│   │   ├── globals.css              # Estilos globais com Tailwind
-│   │   ├── test-crisis/             # Página de teste de alertas
-│   │   │   └── page.tsx
-│   │   └── monitor/                 # Área administrativa dos monitores
-│   │       ├── login/page.tsx       # Login JWT para monitores
-│   │       └── dashboard/page.tsx   # Dashboard com lista de conversas e chat
-│   ├── components/                  # Componentes React reutilizáveis
-│   │   ├── ui/                      # Componentes base de UI
-│   │   │   ├── button.tsx           # Botão customizável
-│   │   │   └── input.tsx            # Input de texto
-│   │   ├── RealTimeChat.tsx         # Chat em tempo real via WebSocket
-│   │   ├── CrisisAlerts.tsx         # Widget de alertas de crise
-│   │   └── TestCrisis.tsx           # Componente para testar alertas
-│   ├── lib/                         # Utilitários e configurações
-│   │   ├── api.ts                   # Cliente Axios com interceptors
-│   │   ├── socket.ts                # SocketManager singleton
-│   │   └── utils.ts                 # Funções auxiliares (formatDate, etc)
-│   └── types/                       # Definições TypeScript
-│       └── index.ts                 # Interfaces (Message, Conversation, etc)
-├── public/                          # Arquivos estáticos
-├── .env.local                       # Variáveis de ambiente (não commitado)
-├── next.config.js                   # Configuração do Next.js
-├── tailwind.config.js               # Configuração do Tailwind CSS
-├── tsconfig.json                    # Configuração do TypeScript
-└── package.json                     # Dependências e scripts
+┌─────────┐          ┌──────────────┐          ┌─────────┐
+│ Usuário │────────▶│  Checkpoint  │◀─────────│ Monitor │
+└─────────┘          └──────────────┘          └─────────┘
+                            │
+                            ▼
+                      ┌──────────┐
+                      │ API + IA │
+                      └──────────┘
 ```
 
-## Instalação e Configuração
+#### Nível 2 - Containers
+
+```
+┌────────────────────────────────────────────────────────┐
+│                    Sistema Checkpoint                   │
+├────────────────────────────────────────────────────────┤
+│                                                         │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
+│  │   Frontend   │  │   Backend    │  │   Painel     │ │
+│  │   Next.js    │◀─│   Python     │─▶│ Monitores    │ │
+│  │  (WebSocket) │  │     + IA     │  │   (Admin)    │ │
+│  └──────────────┘  └──────────────┘  └──────────────┘ │
+│                                                         │
+└────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🛠️ Tecnologias
+
+### Frontend
+
+| Tecnologia | Versão | Uso |
+|-----------|--------|-----|
+| **Next.js** | 14.2 | Framework React com App Router |
+| **TypeScript** | 5.0 | Tipagem estática |
+| **Tailwind CSS** | 3.4 | Estilização utilitária |
+| **Socket.IO Client** | 4.8 | Comunicação em tempo real |
+| **Axios** | 1.7 | Cliente HTTP |
+| **Lucide React** | - | Biblioteca de ícones |
+| **Date-fns** | 4.1 | Manipulação de datas |
+
+### Backend
+
+| Tecnologia | Uso |
+|-----------|-----|
+| **Python** | 3.11+ |
+| **IA/NLP** | Processamento de linguagem natural |
+| **WebSocket** | Comunicação em tempo real |
+
+### Ferramentas de Desenvolvimento
+
+- **Controle de Versão**: GitHub
+- **Gestão de Projeto**: Trello
+- **Análise Estática**: ESLint (Frontend), Flake8 (Backend)
+- **Testes**: Vitest (Frontend), Pytest (Backend)
+
+---
+
+## 🚀 Instalação e Execução
 
 ### Pré-requisitos
 
 - Node.js 18+ ou 20+
-- npm (vem com Node.js)
-- Backend Checkpoint rodando (padrão: http://localhost:8000)
+- npm ou yarn
+- Backend Checkpoint rodando (padrão: `http://localhost:8000`)
 
-### Instalação
+### 1. Clone o Repositório
 
 ```bash
-# Clone o repositório (se ainda não clonou)
-git clone https://github.com/ArthurHoengen/checkpoint-frontend.git
+git clone https://github.com/seu-usuario/checkpoint-frontend.git
 cd checkpoint/frontend
-
-# Instalar dependências
-npm install
 ```
 
-### Configuração
+### 2. Instale as Dependências
 
-Crie o arquivo `.env.local` na raiz do projeto frontend:
+```bash
+npm install
+# ou
+yarn install
+```
+
+### 3. Configure as Variáveis de Ambiente
+
+Crie o arquivo `.env.local` na raiz do projeto:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000
 NEXT_PUBLIC_SOCKET_URL=http://localhost:8000
 ```
 
-**Importante**: Essas variáveis devem apontar para o backend Checkpoint em execução.
+### 4. Execute o Projeto
 
-### Execução
+**Modo Desenvolvimento:**
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+**Build para Produção:**
+```bash
+npm run build
+npm start
+```
+
+A aplicação estará disponível em `http://localhost:3000`
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+frontend/
+├── src/
+│   ├── app/                          # App Router do Next.js
+│   │   ├── page.tsx                 # Chat principal (usuário)
+│   │   ├── layout.tsx               # Layout global
+│   │   ├── globals.css              # Estilos globais Tailwind
+│   │   ├── test-crisis/             # Página de teste de alertas
+│   │   │   └── page.tsx
+│   │   └── monitor/                 # Área administrativa
+│   │       ├── login/page.tsx       # Login JWT
+│   │       └── dashboard/page.tsx   # Dashboard de monitores
+│   │
+│   ├── components/                  # Componentes React
+│   │   ├── ui/                      # Componentes base
+│   │   │   ├── button.tsx
+│   │   │   └── input.tsx
+│   │   ├── RealTimeChat.tsx         # Chat WebSocket
+│   │   ├── CrisisAlerts.tsx         # Widget de alertas
+│   │   └── TestCrisis.tsx           # Teste de alertas
+│   │
+│   ├── lib/                         # Utilitários
+│   │   ├── api.ts                   # Cliente Axios
+│   │   ├── socket.ts                # SocketManager (singleton)
+│   │   └── utils.ts                 # Funções auxiliares
+│   │
+│   └── types/                       # Definições TypeScript
+│       └── index.ts                 # Interfaces (Message, Conversation)
+│
+├── public/                          # Arquivos estáticos
+├── .env.local                       # Variáveis de ambiente
+├── next.config.js                   # Configuração Next.js
+├── tailwind.config.js               # Configuração Tailwind
+├── tsconfig.json                    # Configuração TypeScript
+└── package.json                     # Dependências
+```
+
+---
+
+## 📋 Requisitos
+
+### Requisitos Funcionais (RF)
+
+| ID | Descrição |
+|----|-----------|
+| RF01 | Chatbot desenvolvido em Python com interação empática |
+| RF02 | Frontend em Next.js com interface responsiva |
+| RF03 | Iniciar conversa sem autenticação |
+| RF04 | Solicitar atendimento humano a qualquer momento |
+| RF05 | IA detecta sinais de risco automaticamente |
+| RF06 | Monitor visualiza todos os chats em andamento |
+| RF07 | Monitor assume controle da conversa |
+| RF08 | Chatbot envia mensagens de apoio (técnicas de relaxamento, etc) |
+| RF09 | Substituição automática IA → Humano em alto risco |
+| RF10 | IA opera com base em diretrizes psicológicas |
+
+### Requisitos Não Funcionais (RNF)
+
+| ID | Descrição |
+|----|-----------|
+| RNF01 | Nenhum dado pessoal armazenado (anonimato total) |
+| RNF02 | Sem sistema de autenticação de usuários |
+| RNF03 | Tempo de resposta curto para manter engajamento |
+| RNF04 | Interface clara e acolhedora |
+| RNF05 | Tom empático, acessível e não julgador |
+| RNF06 | Chatbot não emite diagnósticos médicos |
+| RNF07 | Sem gamificação ou elementos de prolongamento |
+| RNF08 | Sem responsabilidade legal por ações de usuários |
+
+---
+
+## 🔌 Integrações
+
+### REST API
+
+**Autenticação:**
+- `POST /auth/login` - Login de monitores
+
+**Chat:**
+- `POST /conversations` - Criar nova conversa
+- `GET /conversations/:id/messages` - Buscar mensagens
+- `POST /messages` - Enviar mensagem
+
+**Monitor:**
+- `GET /monitor/dashboard` - Listar conversas ativas
+- `POST /monitor/take-control/:id` - Assumir controle
+- `POST /monitor/escalate/:id` - Escalar manualmente
+- `GET /monitor/flagged-messages` - Mensagens flagadas
+
+### WebSocket
+
+**Eventos Enviados:**
+- `join_conversation` - Entra no room da conversa
+- `join_monitor` - Entra no room de monitor (requer token)
+- `leave_conversation` - Sai do room
+- `send_message` - Envia mensagem
+- `typing` - Notifica digitação
+- `heartbeat` - Mantém sessão ativa
+
+**Eventos Recebidos:**
+- `new_message` - Nova mensagem na conversa
+- `crisis_alert` - Alerta de crise para monitores
+- `monitor_joined` - Monitor entrou na conversa
+- `message_updated` - Mensagem flagada/atualizada
+- `user_typing` - Alguém está digitando
+
+---
+
+## 💡 Destaques Técnicos
+
+### 1. Singleton Pattern
+`SocketManager` único para evitar múltiplas conexões WebSocket
+
+### 2. Deduplicação
+Prevenção de mensagens e conversas duplicadas com verificação de ID
+
+### 3. Gerenciamento de Estado
+React hooks com TypeScript para type safety
+
+### 4. Interceptors
+Axios configurado com autenticação automática via JWT
+
+### 5. Heartbeat
+Sistema de keep-alive para manter sessões ativas
+
+### 6. Reconexão Automática
+Socket.IO com retry logic em caso de queda
+
+### 7. Client/Server Components
+Separação clara entre componentes cliente e servidor no Next.js 14
+
+### 8. Type Safety
+TypeScript completo em todo o projeto
+
+---
+
+## 🎨 Design e UX
+
+### Princípios de Design
+
+- **Acolhedor**: Cores suaves, elementos visuais que transmitem calma
+- **Minimalista**: Interface limpa sem distrações
+- **Responsivo**: Mobile-first, funciona em todos dispositivos
+- **Acessível**: Boas práticas de acessibilidade web
+
+### Experiência do Usuário
+
+- **Sem Barreiras**: Nenhum cadastro ou login necessário
+- **Feedback Constante**: Indicadores visuais de status e ações
+- **Resposta Rápida**: Sistema otimizado para baixa latência
+- **Empatia Visual**: Design que transmite segurança e acolhimento
+
+---
+
+## 🧪 Testes
 
 ```bash
-# Modo desenvolvimento (com hot reload)
-npm run dev
-
-# Build para produção
-npm run build
-
-# Executar versão de produção
-npm start
-
 # Verificar tipos TypeScript
 npm run type-check
 
 # Linting
 npm run lint
+
+# Testes unitários (quando implementados)
+npm run test
 ```
 
-A aplicação estará disponível em `http://localhost:3000`.
+---
 
-## Fluxo da Aplicação
-
-### Usuário Regular
-
-1. Acessa a página principal (`/`)
-2. Sistema cria automaticamente uma conversa via API
-3. Usuário digita mensagens que são enviadas via WebSocket
-4. IA responde em tempo real através do WebSocket
-5. Sistema backend monitora automaticamente sinais de crise
-6. Se detectado risco alto/crítico, conversa é escalada automaticamente para monitor
-7. Usuário recebe notificação quando monitor entra na conversa
-8. Heartbeat mantém a sessão ativa (30s)
-
-### Monitor
-
-1. Faz login em `/monitor/login` com credenciais JWT
-2. Acessa dashboard em `/monitor/dashboard`
-3. Dashboard se conecta ao room do monitor via WebSocket
-4. Visualiza lista de conversas ativas em tempo real
-5. Recebe alertas de crise via WebSocket no widget `CrisisAlerts`
-6. Pode filtrar conversas (todas, escaladas, flagadas) e buscar
-7. Assume controle de conversas (envia evento `join_monitor` via WebSocket)
-8. Conversa diretamente com usuários através do `RealTimeChat`
-9. Pode escalar conversas manualmente se necessário
-
-## Principais Recursos
-
-### Sistema de Alertas de Crise
-
-O componente `CrisisAlerts` exibe alertas em tempo real recebidos via WebSocket:
-
-- **Níveis de Risco**:
-  - `low`: Notificação visual amarela
-  - `medium`: Notificação visual laranja
-  - `high`: Notificação visual vermelha + som
-  - `critical`: Notificação vermelha pulsante + som + auto-expansão
-
-- **Funcionalidades**:
-  - Widget flutuante minimizável
-  - Notificações sonoras diferenciadas por severidade
-  - Notificações desktop do navegador (se permitido)
-  - Contador de alertas não lidos
-  - Botão para assumir controle direto da conversa
-  - Ignora alertas da conversa atualmente em visualização
-
-### Chat em Tempo Real
-
-O componente `RealTimeChat` gerencia comunicação bidirecional:
-
-- **Recursos**:
-  - Conexão WebSocket automática via `SocketManager` singleton
-  - Indicador visual de status de conexão (verde/vermelho)
-  - Prevenção de mensagens duplicadas com deduplicação
-  - Indicador "Pensando..." quando IA está processando
-  - Indicador "Digitando..." quando outro usuário está digitando
-  - Mensagem pendente com animação enquanto envia
-  - Auto-scroll para última mensagem
-  - Formatação diferenciada por tipo de remetente (user/ai/monitor/system)
-  - Ícone de alerta em mensagens flagadas
-
-- **Eventos WebSocket**:
-  - `join_conversation`: Entra no room da conversa
-  - `send_message`: Envia mensagem
-  - `new_message`: Recebe nova mensagem
-  - `typing`: Notifica que está digitando
-  - `user_typing`: Recebe notificação de digitação
-  - `monitor_joined`: Notificação quando monitor entra
-  - `message_updated`: Atualização de flags/risk_level
-
-### Dashboard do Monitor
-
-Recursos avançados do dashboard:
-
-- **Detecção Automática de Novas Conversas**: Quando chega mensagem de conversa não listada, busca automaticamente as mensagens e adiciona à lista
-- **Prevenção de Race Conditions**: Map de conversas em carregamento previne duplicatas
-- **Filtros em Tempo Real**: Busca textual e filtros por status
-- **WebSocket para Atualizações**: Lista atualiza automaticamente sem polling
-- **Deep Linking**: Suporte a parâmetro `?conversation=ID` na URL para abrir conversa específica
-
-### Gerenciamento de Sessões
-
-- **Heartbeat para Usuários**: Ping a cada 30s mantém sessão ativa no backend
-- **Autenticação JWT**: Token armazenado em localStorage
-- **Interceptor Axios**: Adiciona automaticamente token em todas requisições
-- **Reconexão Automática**: Socket.IO tenta reconectar automaticamente em caso de queda
-
-## Arquitetura e Integrações
-
-### REST API
-
-Cliente Axios configurado em [lib/api.ts](src/lib/api.ts):
-
-**authAPI**:
-
-- `login(username, password)`: Autenticação de monitores
-
-**chatAPI**:
-
-- `createConversation(title)`: Cria nova conversa
-- `getMessages(conversationId)`: Busca mensagens
-- `sendMessage(conversationId, sender, text, sessionId)`: Envia mensagem (também via WebSocket)
-
-**monitorAPI**:
-
-- `getDashboard()`: Lista conversas ativas
-- `takeControl(conversationId)`: Assume controle da conversa
-- `escalateConversation(conversationId, reason)`: Escala manualmente
-- `getFlaggedMessages(limit)`: Lista mensagens flagadas
-
-### WebSocket
-
-Gerenciador singleton em [lib/socket.ts](src/lib/socket.ts):
-
-**Eventos Enviados**:
-
-- `join_conversation`: Entra em room de conversa
-- `join_monitor`: Entra em room de monitor (requer token)
-- `leave_conversation`: Sai de room
-- `send_message`: Envia mensagem
-- `typing`: Notifica digitação
-- `heartbeat`: Mantém sessão viva
-
-**Eventos Recebidos**:
-
-- `new_message`: Nova mensagem na conversa
-- `crisis_alert`: Alerta de crise para monitores
-- `monitor_joined`: Monitor entrou na conversa
-- `message_updated`: Mensagem foi flagada/atualizada
-- `user_typing`: Alguém está digitando
-
-## Tipos TypeScript
-
-As principais interfaces estão definidas em [types/index.ts](src/types/index.ts):
-
-```typescript
-interface Message {
-  id: number
-  sender: string              // 'user' | 'ai' | 'monitor' | 'system'
-  text: string
-  created_at: string
-  session_id?: string
-  flagged: boolean
-  risk_level?: string         // 'low' | 'medium' | 'high' | 'critical'
-  escalation_level?: string
-  notified: boolean
-  intervention_timestamp?: string
-  extra_data?: Record<string, any>
-}
-
-interface Conversation {
-  id: number
-  title?: string
-  mode: string                // 'user' | 'monitor'
-  active: boolean
-  status?: string             // 'active' | 'escalated'
-  created_at?: string
-  updated_at?: string
-  messages: Message[]
-}
-
-interface CrisisAnalysis {
-  risk_level: string
-  confidence: number
-  keywords_found: string[]
-  requires_human: boolean
-  emergency_contact: boolean
-  analysis_details: Record<string, any>
-}
-```
-
-## Rotas da Aplicação
-
-- `/` - Chat do usuário (página principal)
-- `/monitor/login` - Login de monitores
-- `/monitor/dashboard` - Dashboard do monitor
-- `/test-crisis` - Página de teste de alertas (desenvolvimento)
-
-## Deploy
+## 📦 Deploy
 
 ### Vercel (Recomendado)
 
@@ -305,26 +403,13 @@ interface CrisisAnalysis {
 # Build local
 npm run build
 
-# Deploy para Vercel
+# Deploy
 vercel --prod
 ```
 
-Configure as variáveis de ambiente no painel da Vercel:
-
+**Variáveis de Ambiente:**
 - `NEXT_PUBLIC_API_URL`: URL do backend em produção
 - `NEXT_PUBLIC_SOCKET_URL`: URL do WebSocket em produção
-
-### Build Manual
-
-```bash
-# Build
-npm run build
-
-# Servir em produção
-npm start
-```
-
-A aplicação será servida na porta 3000.
 
 ### Docker
 
@@ -339,84 +424,49 @@ docker run -p 3000:3000 \
   checkpoint-frontend
 ```
 
-### Outras Plataformas
+---
 
-A aplicação é compatível com qualquer provedor que suporte Next.js 14:
+## 🎓 Autor
 
-- Netlify
-- AWS Amplify
-- Railway
-- Render
-- DigitalOcean App Platform
+**Arthur Hoengen**
 
-## Desenvolvimento
+Desenvolvedor Full Stack | Engenharia de Software
+Católica de Santa Catarina - Jaraguá do Sul
 
-### Estrutura de Componentes
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Conectar-blue)](https://linkedin.com/in/seu-perfil)
+[![GitHub](https://img.shields.io/badge/GitHub-Seguir-black)](https://github.com/ArthurHoengen)
+[![Email](https://img.shields.io/badge/Email-Contato-red)](mailto:seu-email@exemplo.com)
 
-- **Componentes de Página** (`app/`): Componentes de rota do Next.js App Router
-- **Componentes Reutilizáveis** (`components/`): Lógica de UI compartilhada
-- **Componentes Base** (`components/ui/`): Primitivos de design system
+---
 
-### Padrões de Código
+## 📄 Licença
 
-- **Client Components**: Todos os componentes que usam hooks ou interatividade têm `'use client'`
-- **Server Components**: Por padrão no Next.js 14 App Router (quando aplicável)
-- **Singleton Pattern**: `SocketManager` é singleton para evitar múltiplas conexões
-- **Deduplicação**: Prevenção de mensagens e conversas duplicadas com verificações de ID
+Este projeto foi desenvolvido como Trabalho de Conclusão de Curso e está disponível sob a licença MIT.
 
-### Debugging
+---
 
-Console logs estão presentes para debugging de WebSocket:
+## ⚠️ Nota Importante
 
-- `🚪` Eventos de entrada/saída de rooms
-- `📨` Mensagens recebidas
-- `📤` Mensagens enviadas
-- `🚨` Alertas de crise
-- `✅` Operações bem-sucedidas
-- `❌` Erros
-- `⚠️` Avisos
+O Checkpoint é uma ferramenta de **acolhimento inicial** e **não substitui** o acompanhamento profissional de saúde mental. Em situações de emergência, procure sempre um profissional qualificado ou ligue para serviços de apoio como:
 
-Para desabilitar em produção, remova ou comente os `console.log`.
+- **CVV**: 188 (Centro de Valorização da Vida)
+- **SAMU**: 192
+- **Emergência**: 190 ou 193
 
-## Troubleshooting
+---
 
-### WebSocket não conecta
+## 🙏 Agradecimentos
 
-1. Verifique se backend está rodando
-2. Confirme `NEXT_PUBLIC_SOCKET_URL` no `.env.local`
-3. Verifique CORS no backend
-4. Confira console do navegador para erros
+- Católica de Santa Catarina
+- Orientadores do curso de Engenharia de Software
+- Comunidade open source das tecnologias utilizadas
 
-### Mensagens duplicadas
+---
 
-- Sistema já possui deduplicação baseada em ID e timestamp
-- Se persistir, verifique se há múltiplos listeners registrados
+<div align="center">
 
-### Alertas não aparecem
+**Desenvolvido com 💙 para fazer a diferença**
 
-1. Verifique se monitor está logado
-2. Confirme que `monitorId` está sendo passado para `CrisisAlerts`
-3. Verifique se monitor entrou no room correto (`join_monitor`)
-4. Confira console para eventos `crisis_alert`
+*Um checkpoint seguro na jornada emocional*
 
-### Autenticação falha
-
-1. Verifique credenciais no backend
-2. Confirme que token está sendo salvo em `localStorage`
-3. Verifique interceptor Axios em `lib/api.ts`
-4. Token pode ter expirado - faça login novamente
-
-## Próximos Passos
-
-Melhorias sugeridas:
-
-- [ ] Adicionar testes unitários (Jest + React Testing Library)
-- [ ] Implementar testes E2E (Playwright ou Cypress)
-- [ ] Adicionar suporte a múltiplos idiomas (i18n)
-- [ ] Implementar dark mode
-- [ ] Melhorar acessibilidade (ARIA labels, navegação por teclado)
-- [ ] Adicionar métricas e analytics
-- [ ] Implementar cache de mensagens com IndexedDB
-- [ ] Adicionar suporte a anexos/imagens
-- [ ] Implementar histórico de conversas para usuários
-- [ ] Adicionar dashboard de métricas para monitores
+</div>
