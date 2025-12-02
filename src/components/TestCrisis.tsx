@@ -34,7 +34,7 @@ export default function TestCrisis() {
       )
       setResult(response)
       console.log('Resposta da API:', response)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao enviar mensagem:', error)
       setResult({ error: error.message })
     } finally {
